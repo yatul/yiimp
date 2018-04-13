@@ -127,7 +127,7 @@ function showPageHeader()
 	$mining = getdbosql('db_mining');
 	$nextpaymentDate = $mining->last_payout + YAAMP_PAYMENTS_FREQ;
 
-    $nextpaymentDateTime = new DateTime($nextpaymentDate);
+    $nextpaymentDateTime = new DateTime(date('H:i T', $nextpaymentDate));
     $remainingTime = $nextpaymentDateTime->diff(new DateTime());
 
 	$nextpayment = date('H:i T', $nextpaymentDate);
