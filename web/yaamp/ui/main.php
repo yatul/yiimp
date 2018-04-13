@@ -132,7 +132,7 @@ function showPageHeader()
 
 	$nextpayment = date('H:i T', $nextpaymentDate);
 
-	echo '<span style="font-size: .8em;">Next Payout: '.$nextpayment.' (Still '.$remainingTime->h.'h '.$remainingTime->m.' mins to payment )</span>';
+	echo '<span style="font-size: .8em;">Next Payout: '.$nextpayment.' (Still '.$remainingTime->h.'h '.$remainingTime->i.' mins to payment )</span>';
 
 	echo "</div>";
 	echo "</div>";
