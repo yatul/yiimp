@@ -125,9 +125,14 @@ function showPageHeader()
 	echo '<span style="float: right;">';
 
 	$mining = getdbosql('db_mining');
-	$nextpayment = date('H:i T', $mining->last_payout+YAAMP_PAYMENTS_FREQ);
+	$nextpaymentDate = $mining->last_payout + YAAMP_PAYMENTS_FREQ;
 
-	echo '<span style="font-size: .8em;">Next Payout: '.$nextpayment.'</span>';
+    $nextpaymentDateTime = new DateTime($nextpaymentDate);
+    $remainingTime = $nextpaymentDateTime->diff(new DateTime());
+
+	$nextpayment = date('H:i T', $nextpaymentDate);
+
+	echo '<span style="font-size: .8em;">Next Payout: '.$nextpayment.' (Still '.$remainingTime->h.'h '.$remainingTime->m.' mins to payment )</span>';
 
 	echo "</div>";
 	echo "</div>";
@@ -139,7 +144,7 @@ function showPageFooter()
 	$year = date("Y", time());
 
 	echo "<p>&copy; $year <a href=\"http://github.com/yatul/yiimp\">".YAAMP_SITE_NAME.'</a> - '.
-		'based on <a href="http://github.com/tpruvot/yiimp"></a></p>';
+		'based on <a href="http://github.com/tpruvot/yiimp">yiimp</a></p>';
 
 	echo '</div><!-- footer -->';
 }
