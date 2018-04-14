@@ -167,10 +167,8 @@ foreach($list as $coin)
 	else
 		echo "<td align=right style='font-size: .8em;'>$height</td>";
 
-	if(!YAAMP_ALLOW_EXCHANGE && !empty($real_ttf))
+	if(!empty($real_ttf))
 		echo '<td align="right" style="font-size: .8em;" title="'.$pool_ttf.' at full pool speed">'.$real_ttf.'</td>';
-	elseif(!empty($real_ttf))
-		echo '<td align="right" style="font-size: .8em;" title="'.$real_ttf.' at '.Itoa2($pool_hash).'">'.$pool_ttf.'</td>';
 	else
 		echo '<td align="right" style="font-size: .8em;" title="At current pool speed">'.$pool_ttf.'</td>';
 
