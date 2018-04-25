@@ -219,6 +219,12 @@ class ExchangeCommand extends CConsoleCommand
 			if (!is_array($info) || arraySafeVal($info,'success') != 1) echo "stocksexchange error ".json_encode($info)."\n";
 			else echo("stocksexchange: ".json_encode($info['data']['funds'])."\n");
 		}
+        if (!empty(EXCH_SOUTHXCHANGE_KEY)) {
+            // $info = stocksexchange_api_user('Deposit',array("currency"=>"BTC"));
+            $info = southxchange_api_query_post('listBalances');
+            if (!is_array($info)) echo "southxchange error ".json_encode($info)."\n";
+            else echo("southxchange: ".json_encode($info['Currency'].':'.$info['Deposited'])."\n");
+        }
 		if (!empty(EXCH_YOBIT_KEY)) {
 			$info = yobit_api_query2('getInfo');
 			if (!arraySafeVal($info,'success',0) || !is_array($info['return'])) echo "error\n";

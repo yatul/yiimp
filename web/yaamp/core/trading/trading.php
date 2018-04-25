@@ -14,6 +14,7 @@ require_once('hitbtc_trading.php');
 require_once('kucoin_trading.php');
 require_once('livecoin_trading.php');
 require_once('nova_trading.php');
+require_once('southxchange_trading.php');
 
 
 function cancelExchangeOrder($order=false)
@@ -48,6 +49,9 @@ function cancelExchangeOrder($order=false)
 			case 'livecoin':
 				doLiveCoinCancelOrder($order->uuid);
 				break;
+            case 'southxchange':
+                doSouthxchangeCancelOrder($order->uuid);
+                break;
 
 		}
 }
@@ -153,6 +157,11 @@ function runExchange($exchangeName=false)
 				doPoloniexTrading(true);
 				updatePoloniexMarkets();
 				break;
+
+            case 'southxchange':
+                doSouthxchangeTrading(true);
+                updateSouthxchangeMarkets();
+                break;
 
 			default:
 				debuglog(__FUNCTION__.' '.$exchangeName.' not implemented');

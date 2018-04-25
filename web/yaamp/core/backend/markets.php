@@ -1747,6 +1747,88 @@ function updateShapeShiftMarkets()
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+function updateSouthxchangeMarkets($force = false)
+{
+    $exchange = 'southxchange';
+    if (exchange_get($exchange, 'disabled')) return;
+
+    $list = getdbolist('db_markets', "name LIKE '$exchange%'");
+    if (empty($list)) return;
+
+    $markets = southxchange_api_query('prices');
+    if(!is_array($markets) || empty($markets)) return;
+
+    foreach($markets as $m)
+    {
+        $e = explode('/', $m->Market);
+        $symbol = strtoupper($e[0]);
+        $base = $e[1];
+        if($base != 'BTC') continue;
+
+        $coin = getdbosql('db_coins', "symbol=:sym", array(':sym'=>$symbol));
+        if(!$coin) continue;
+
+        $market = getdbosql('db_markets', "coinid={$coin->id} AND name='$exchange' AND IFNULL(base_coin,'') IN ('','BTC')");
+        if(!$market) continue;
+
+        $symbol = $coin->getOfficialSymbol();
+        if (market_get($exchange, $symbol, "disabled")) {
+            $market->disabled = 1;
+            $market->message = 'disabled from settings';
+            $market->save();
+            continue;
+        }
+
+        $market->disabled = ($m->Volume24Hr == 0.0);
+
+        $price2 = ((double)$m->Ask + (double)$m->Bid)/2;
+        $market->price2 = AverageIncrement($market->price2, $price2);
+        $market->price = AverageIncrement($market->price, (double)$m->Bid);
+        $market->priority = -1; // not ready for trading
+
+        //debuglog("$exchange: $symbol price set to ".bitcoinvaluetoa($market->price));
+        $market->pricetime = time();
+        $market->save();
+
+        if (empty($coin->price2)) {
+            $coin->price = $market->price;
+            $coin->price2 = $market->price2;
+            $coin->save();
+        }
+    }
+
+    if(empty(EXCH_SOUTHXCHANGE_KEY)) return;
+
+    $last_checked = cache()->get($exchange.'-deposit_address-check');
+    if ($last_checked) return;
+
+    $addresses = array();
+    sleep(1);
+
+    if (!empty($list))
+        foreach($list as $market) {
+            $coin = getdbo('db_coins', $market->coinid);
+            if(!$coin) continue;
+
+            $symbol = $coin->getOfficialSymbol();
+            $addr = arraySafeVal($addresses, $symbol);
+            if($force || (empty($market->deposit_address) && !$last_checked))
+            {
+                if(!$coin->installed) continue;
+                $query = southxchange_api_query_post('generatenewaddress', array('currency'=>$symbol));
+                $addr = objSafeVal($query,'Address');
+            }
+            if (!empty($addr) && $market->deposit_address != $addr) {
+                debuglog("$exchange: deposit address for {$symbol} updated");
+                $market->deposit_address = $addr;
+                $market->save();
+            }
+        }
+    cache()->set($exchange.'-deposit_address-check', time(), 12*3600);
+}
+
 // update other installed coins price from cryptonator
 function updateOtherMarkets()
 {

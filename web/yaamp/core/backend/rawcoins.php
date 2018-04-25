@@ -16,6 +16,7 @@ function updateRawcoins()
 	exchange_set_default('jubi', 'disabled', true);
 	exchange_set_default('nova', 'disabled', true);
 	exchange_set_default('stocksexchange', 'disabled', true);
+    exchange_set_default('southxchange', 'disabled', true);
 	exchange_set_default('tradesatoshi', 'disabled', true);
 
 	settings_prefetch_all();
@@ -339,6 +340,20 @@ function updateRawcoins()
 				$symbol = $item->currency;
 				$name = trim($item->currencyLong);
 				updateRawCoin('tradesatoshi', $symbol, $name);
+			}
+		}
+	}
+
+	if (!exchange_get('southxchange', 'disabled')) {
+		$list = southxchange_api_query('price');
+		if(is_array($list))
+		{
+			dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");
+			foreach($list as $pair) {
+				if ($pair[1] != 'BTC')
+					continue;
+				$symbol = strtoupper($pair[0]);
+				updateRawCoin('southxchange', $symbol);
 			}
 		}
 	}

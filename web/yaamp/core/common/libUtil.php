@@ -65,6 +65,11 @@ function GetSSModulePath($name)
 	if(!$result)
 		$result = findfile('yaamp/modules', "/\/{$name}.php/");
 
+    if(!$result)
+        $result = findfile('models', "/\/{$name}.php/");
+    if(!$result)
+        $result = findfile('modules', "/\/{$name}.php/");
+
 //	debuglog($result);
 	return $result;
 }
