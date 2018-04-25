@@ -16,7 +16,7 @@ function updateRawcoins()
 	exchange_set_default('jubi', 'disabled', true);
 	exchange_set_default('nova', 'disabled', true);
 	exchange_set_default('stocksexchange', 'disabled', true);
-    exchange_set_default('southxchange', 'disabled', true);
+    exchange_set_default('southxchange', 'disabled', false);
 	exchange_set_default('tradesatoshi', 'disabled', true);
 
 	settings_prefetch_all();
