@@ -33,6 +33,7 @@ function BackendPricesUpdate()
 	updateCoinsMarketsMarkets();
 	updateStocksExchangeMarkets();
 	updateTradeSatoshiMarkets();
+	updateSouthxchangeMarkets();
 
 	updateShapeShiftMarkets();
 	updateOtherMarkets();
