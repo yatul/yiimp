@@ -40,18 +40,21 @@ function southxchange_api_query_post($method, $req = array())
     $sign = hash_hmac('sha512', $postData, $apisecret);
 
     $ch = curl_init($uri);
+    $verbose = fopen('/var/log/yaamp/curl', 'w+');
+    curl_setopt($ch, CURLOPT_STDERR, $verbose);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',   "Hash:$sign"));
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_URL, $uri);
 
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
-
 
     debuglog("southxchange api call result: $execResult");
     return $resData;
