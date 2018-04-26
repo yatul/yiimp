@@ -53,6 +53,9 @@ function southxchange_api_query_post($method, $req = array())
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_URL, $uri);
 
+    if (defined('CURL_IPRESOLVE_V4')){
+       curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    }
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 

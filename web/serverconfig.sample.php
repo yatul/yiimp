@@ -6,6 +6,8 @@ define('YAAMP_LOGS', '/var/log');
 define('YAAMP_HTDOCS', '/var/web');
 define('YAAMP_BIN', '/var/bin');
 
+define('CURL_IPRESOLVE_V4',true);
+
 define('YAAMP_DBHOST', 'localhost');
 define('YAAMP_DBNAME', 'yaamp');
 define('YAAMP_DBUSER', 'root');
