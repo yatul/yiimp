@@ -40,12 +40,14 @@ function doSouthxchangeUpdateBalance()
         $savebalance->save();
     }
 
-    $balancesStr=implode("|", $balances);
 
-    debuglog("doSouthxchangeUpdateBalance balances: $balancesStr");
-    if (is_array($balances) )
-        foreach($balances as $balance)
-        {
+    if (is_array($balances) ) {
+        debuglog("doSouthxchangeUpdateBalance before imlode");
+        $balancesStr = implode("\n", $balances);
+
+        debuglog("doSouthxchangeUpdateBalance balances: $balancesStr");
+
+        foreach ($balances as $balance) {
             debuglog("doSouthxchangeUpdateBalance forEach: $balance->Currency");
             if ($balance->Currency == 'BTC') {
                 if (is_object($savebalance)) {
@@ -59,11 +61,11 @@ function doSouthxchangeUpdateBalance()
             if ($updatebalances) {
                 // store available balance in market table
                 $coins = getdbolist('db_coins', "symbol=:symbol OR symbol2=:symbol",
-                    array(':symbol'=>$balance->Currency)
+                    array(':symbol' => $balance->Currency)
                 );
                 if (empty($coins)) continue;
                 foreach ($coins as $coin) {
-                    $market = getdbosql('db_markets', "coinid=:coinid AND name='$exchange'", array(':coinid'=>$coin->id));
+                    $market = getdbosql('db_markets', "coinid=:coinid AND name='$exchange'", array(':coinid' => $coin->id));
                     if (!$market) continue;
                     $market->balance = $balance->Available;
                     $market->ontrade = $balance->Deposited;
@@ -77,6 +79,7 @@ function doSouthxchangeUpdateBalance()
                 }
             }
         }
+    }
     return $balances;
 }
 
