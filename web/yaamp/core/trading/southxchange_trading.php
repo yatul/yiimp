@@ -25,6 +25,7 @@ function doSouthxchangeCancelOrder($orderID)
 
 function doSouthxchangeUpdateBalance()
 {
+    debuglog("doSouthxchangeUpdateBalance start");
     $exchange = 'southxchange';
     $updatebalances=true;
     if (!$updatebalances) {
@@ -39,9 +40,13 @@ function doSouthxchangeUpdateBalance()
         $savebalance->save();
     }
 
-    if (is_array($balances))
+    $balancesStr=implode("|", $balances);
+
+    debuglog("doSouthxchangeUpdateBalance balances: $balancesStr");
+    if (is_array($balances) )
         foreach($balances as $balance)
         {
+            debuglog("doSouthxchangeUpdateBalance forEach: $balance->Currency");
             if ($balance->Currency == 'BTC') {
                 if (is_object($savebalance)) {
                     $savebalance->balance = $balance->Available;
