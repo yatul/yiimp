@@ -19,6 +19,7 @@ function southxchange_api_query($method)
 
 function southxchange_api_query_post($method, $req = array())
 {
+    require_once('/etc/yiimp/keys.php');
     $uri = "https://www.southxchange.com/api/$method";
 
     $reqStr=implode("|", $req);
