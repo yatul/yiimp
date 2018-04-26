@@ -46,6 +46,7 @@ function southxchange_api_query_post($method, $req = array())
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',   "Hash:$sign"));
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_URL, $uri);
 
     $execResult = curl_exec($ch);
