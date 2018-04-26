@@ -12,7 +12,7 @@ function southxchange_api_query($method)
 
 	$execResult = curl_exec($ch);
 	$obj = json_decode($execResult);
-    debuglog("southxchange api call result: $obj");
+    debuglog("southxchange api call result: $execResult");
 
 	return $obj;
 }
@@ -21,7 +21,9 @@ function southxchange_api_query_post($method, $req = array())
 {
     $uri = "https://www.southxchange.com/api/$method";
 
-    debuglog("southxchange api post: $method with params: $req");
+    $reqStr=implode("|", $req);
+
+    debuglog("southxchange api post: $method with params: $reqStr");
     // optional secret key
     if (empty(EXCH_SOUTHXCHANGE_SECRET) && strpos($method, 'public') === FALSE) return FALSE;
     if (empty(EXCH_SOUTHXCHANGE_KEY) && strpos($method, 'public') === FALSE) return FALSE;
@@ -48,7 +50,8 @@ function southxchange_api_query_post($method, $req = array())
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 
-    debuglog("southxchange api call result: $resData");
+
+    debuglog("southxchange api call result: $execResult");
     return $resData;
 }
 
