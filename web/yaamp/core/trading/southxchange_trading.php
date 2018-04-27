@@ -45,7 +45,7 @@ function doSouthxchangeUpdateBalance()
 
     if (is_array($balances) ) {
         debuglog("doSouthxchangeUpdateBalance before imlode");
-        $balancesStr = implode("\n", $balances);
+        $balancesStr = print_r($balances, true);
 
         debuglog("doSouthxchangeUpdateBalance balances: $balancesStr");
 

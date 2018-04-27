@@ -40,9 +40,9 @@ function southxchange_api_query_post($method, $req = array())
     $sign = hash_hmac('sha512', $postData, $apisecret);
 
     $ch = curl_init($uri);
-    $verbose = fopen('/var/log/yaamp/curl', 'w+');
+    /*$verbose = fopen('/var/log/yaamp/curl', 'w+');
     curl_setopt($ch, CURLOPT_STDERR, $verbose);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    curl_setopt($ch, CURLOPT_VERBOSE, true);*/
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
