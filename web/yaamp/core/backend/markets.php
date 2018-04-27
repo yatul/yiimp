@@ -362,8 +362,8 @@ function updateGraviexMarkets($force = false)
 		$dbpair = $symbol.'btc';
 		foreach ($markets as $pair => $ticker) {
 			if ($pair != $dbpair) continue;
-			$price2 = ($ticker['ticker']['high']+$ticker['ticker']['low'])/2;
-			$market->price = AverageIncrement($market->price, $ticker['ticker']['high']);
+			$price2 = ($ticker['ticker']['buy']+$ticker['ticker']['sell'])/2;
+			$market->price = AverageIncrement($market->price, $ticker['ticker']['buy']);
 			$market->price2 = AverageIncrement($market->price2, $price2);
 			$market->pricetime = time();
 			$market->save();

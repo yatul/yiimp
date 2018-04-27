@@ -59,8 +59,8 @@ class ExplorerController extends CommonController
 		$coin = getdbo('db_coins', $id);
 		if($coin && $coin->no_explorer) {
 			$link = $coin->link_explorer;
-			//$txid = getparam('txid');
-			//$hash = getparam('hash');
+			//$txid = gethexparam('txid');
+			//$hash = gethexparam('hash');
 			//if (!empty($txid)) $link .= 'tx/'.$txid;
 			//elseif (!empty($hash)) $link .= 'block/'.$hash;
 			die("Block explorer disabled, please use <a href=\"$link\">$link</a>");
@@ -71,11 +71,11 @@ class ExplorerController extends CommonController
 			$remote = new WalletRPC($coin);
 			$hash = $remote->getblockhash(intval($height));
 		} else {
-			$hash = getparam('hash');
+			$hash = gethexparam('hash');
 		}
 
-		$txid = getparam('txid');
-		$q = getparam('q');
+		$txid = gethexparam('txid');
+		$q = gethexparam('q');
 		if (strlen($q) >= 32 && ctype_xdigit($q)) {
 			$remote = new WalletRPC($coin);
 			$block = $remote->getblock($q);
@@ -87,7 +87,7 @@ class ExplorerController extends CommonController
 			}
 		}
 
-		if($coin && !empty($txid) && ctype_xdigit($txid))
+		if($coin && !empty($txid))
 		{
 			$remote = new WalletRPC($coin);
 			$tx = $remote->getrawtransaction($txid, 1);
@@ -96,7 +96,7 @@ class ExplorerController extends CommonController
 			$hash = arraySafeVal($tx,'blockhash');
 		}
 
-		if($coin && !empty($hash) && ctype_xdigit($hash))
+		if($coin && !empty($hash))
 			$this->render('block', array('coin'=>$coin, 'hash'=>$hash));
 
 		else if($coin)
@@ -116,9 +116,9 @@ class ExplorerController extends CommonController
 	public function actionSearch()
 	{
 		$height = getiparam('height');
-		$txid = arraySafeVal($_REQUEST,'txid');
-		$hash = arraySafeVal($_REQUEST,'hash');
-		$q = arraySafeVal($_REQUEST,'q');
+		$txid = gethexparam('txid');
+		$hash = gethexparam('hash');
+		$q = gethexparam('q');
 		if (isset($_GET['SYM'])) {
 			// only for visible coins
 			$url = "/explorer/".$_GET['SYM']."?";

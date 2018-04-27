@@ -397,7 +397,7 @@ function updateRawCoin($marketname, $symbol, $name='unknown')
 	if($symbol == 'BTC') return;
 
 	$coin = getdbosql('db_coins', "symbol=:symbol", array(':symbol'=>$symbol));
-	if(!$coin && $marketname != 'yobit')
+	if(!$coin && YAAMP_CREATE_NEW_COINS)
 	{
 		$algo = '';
 		if ($marketname == 'cryptopia') {
@@ -419,6 +419,10 @@ function updateRawCoin($marketname, $symbol, $name='unknown')
 			// don't polute too much the db with new coins, its better from exchanges with labels
 			return;
 		}
+
+		// some other to ignore...
+		if (in_array($marketname, array('yobit','kucoin')))
+			return;
 
 		if (market_get($marketname, $symbol, "disabled")) {
 			return;
