@@ -353,7 +353,7 @@ function updateRawcoins()
 				if ($pair[1] != 'BTC')
 					continue;
 				$symbol = strtoupper($pair[0]);
-				updateRawCoin('southxchange', $symbol);
+				updateRawCoin('southxchange', $symbol, $name);
 			}
 		}
 	}
