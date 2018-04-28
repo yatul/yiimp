@@ -345,7 +345,7 @@ function updateRawcoins()
 	}
 
 	if (!exchange_get('southxchange', 'disabled')) {
-		$list = southxchange_api_query('price');
+		$list = southxchange_api_query('prices');
 		if(is_array($list))
 		{
 			dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");

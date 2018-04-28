@@ -8,6 +8,7 @@ function BackendPricesUpdate()
 	market_set_default('yobit', 'DCR', 'disabled', true); // no withdraw
 	market_set_default('bter', 'SFR', 'disabled', true);
 
+
 	settings_prefetch_all();
 
 	updateBittrexMarkets();
