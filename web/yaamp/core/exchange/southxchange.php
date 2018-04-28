@@ -59,7 +59,9 @@ function southxchange_api_query_post($method, $req = array())
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 
-    debuglog("southxchange api call result: $execResult");
+    $balancesStr = print_r($execResult, true);
+
+    debuglog("southxchange api call result: $balancesStr");
     return $resData;
 }
 
