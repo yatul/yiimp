@@ -1783,7 +1783,7 @@ function updateSouthxchangeMarkets($force = false)
             continue;
         }
 
-        $market->disabled = ($m->Volume24Hr == 0.0);
+        $market->disabled = 0;
 
         $price2 = ((double)$m->Ask + (double)$m->Bid)/2;
         $market->price2 = AverageIncrement($market->price2, $price2);
