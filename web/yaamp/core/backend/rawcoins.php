@@ -349,7 +349,7 @@ function updateRawcoins()
 		{
 			dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");
 			$debugStr = print_r($list);
-			debuglog("update raw coins southx: $list");
+			debuglog("update raw coins southx: $debugStr");
 			foreach($list as $pair) {
 				if ($pair[1] != 'BTC')
 					continue;
