@@ -16,7 +16,6 @@ function updateRawcoins()
 	exchange_set_default('jubi', 'disabled', true);
 	exchange_set_default('nova', 'disabled', true);
 	exchange_set_default('stocksexchange', 'disabled', true);
-    exchange_set_default('southxchange', 'disabled', false);
 	exchange_set_default('tradesatoshi', 'disabled', true);
 
 	settings_prefetch_all();
@@ -349,11 +348,13 @@ function updateRawcoins()
 		if(is_array($list))
 		{
 			dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");
+			$debugStr = print_r($list);
+			debuglog("update raw coins southx: $list");
 			foreach($list as $pair) {
 				if ($pair[1] != 'BTC')
 					continue;
 				$symbol = strtoupper($pair[0]);
-				updateRawCoin('southxchange', $symbol, $name);
+				updateRawCoin('southxchange', $symbol);
 			}
 		}
 	}
@@ -395,6 +396,10 @@ function updateRawcoins()
 function updateRawCoin($marketname, $symbol, $name='unknown')
 {
 	if($symbol == 'BTC') return;
+
+	if($marketname == 'southxchange') {
+	    debuglog("Southxchange update raw coin $symbol");
+    }
 
 	$coin = getdbosql('db_coins', "symbol=:symbol", array(':symbol'=>$symbol));
 	if(!$coin && YAAMP_CREATE_NEW_COINS)
