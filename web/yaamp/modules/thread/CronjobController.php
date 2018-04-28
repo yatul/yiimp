@@ -30,7 +30,7 @@ class CronjobController extends CommonController
 		$res = exec("pgrep $webserver");
 		$webserver_running = !empty($res);
 
-		if($e[0] > 4 && $webserver_running)
+		if($e[0] > 8 && $webserver_running)
 		{
 			debuglog('server overload!');
 	//		debuglog('stopping webserver');
