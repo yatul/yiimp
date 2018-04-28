@@ -1821,7 +1821,7 @@ function updateSouthxchangeMarkets($force = false)
                 if(!$coin->installed) continue;
                 $query = southxchange_api_query_post('generatenewaddress', array('currency'=>$symbol));
 
-                $addr = objSafeVal($query,'Address');
+                $addr = $query;
                 debuglog("Created new address: $addr");
             }
             if (!empty($addr) && $market->deposit_address != $addr) {
