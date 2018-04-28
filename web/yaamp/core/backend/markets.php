@@ -309,17 +309,17 @@ function updateCryptoBridgeMarkets($force = false)
 		$symbol = reset($pairs); $base = end($pairs);
 		if($symbol == 'BTC' || $base != 'BTC') continue;
 
-		if (market_get($exchange, $symbol, "disabled")) {
-			$market->disabled = 1;
-			$market->message = 'disabled from settings';
-		}
-
 		$coin = getdbosql('db_coins', "symbol='{$symbol}'");
 		if(!$coin) continue;
 		if(!$coin->installed && !$coin->watch) continue;
 
 		$market = getdbosql('db_markets', "coinid={$coin->id} and name='{$exchange}'");
 		if(!$market) continue;
+
+        if (market_get($exchange, $symbol, "disabled")) {
+            $market->disabled = 1;
+            $market->message = 'disabled from settings';
+        }
 
 		$price2 = ($ticker->bid + $ticker->ask)/2;
 		$market->price2 = AverageIncrement($market->price2, $price2);
@@ -1820,7 +1820,9 @@ function updateSouthxchangeMarkets($force = false)
             {
                 if(!$coin->installed) continue;
                 $query = southxchange_api_query_post('generatenewaddress', array('currency'=>$symbol));
+
                 $addr = objSafeVal($query,'Address');
+                debuglog("Created new address: $addr");
             }
             if (!empty($addr) && $market->deposit_address != $addr) {
                 debuglog("$exchange: deposit address for {$symbol} updated");
