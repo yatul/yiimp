@@ -12,7 +12,7 @@ function southxchange_api_query($method)
 
 	$execResult = curl_exec($ch);
 	$obj = json_decode($execResult);
-    debuglog("southxchange api call result: $execResult");
+    //debuglog("southxchange api call result: $execResult");
 
 	return $obj;
 }
@@ -59,7 +59,7 @@ function southxchange_api_query_post($method, $req = array())
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 
-    debuglog("southxchange api call result: $execResult");
+    //debuglog("southxchange api call result: $execResult");
     return $resData;
 }
 
