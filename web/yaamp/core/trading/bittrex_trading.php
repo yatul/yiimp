@@ -48,6 +48,9 @@ function doBittrexTrading($quick=false)
 			$coins = getdbolist('db_coins', "symbol=:sym OR symbol2=:sym", array(':sym'=>$balance->Currency));
 			if (empty($coins)) continue;
 			foreach ($coins as $coin) {
+                if(!$coin->installed){
+                    continue;
+                }
 				$market = getdbosql('db_markets', "coinid=:coinid AND name='$exchange'", array(':coinid'=>$coin->id));
 				if (!$market) continue;
 				$market->balance = $balance->Available;
