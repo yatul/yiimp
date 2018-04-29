@@ -344,19 +344,20 @@ function updateRawcoins()
 	}
 
 	if (!exchange_get('southxchange', 'disabled')) {
-		$list = southxchange_api_query('prices');
-		if(is_array($list))
-		{
-			dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");
-			$debugStr = print_r($list);
-			debuglog("update raw coins southx: $debugStr");
-			foreach($list as $pair) {
-				if ($pair[1] != 'BTC')
-					continue;
-				$symbol = strtoupper($pair[0]);
-				updateRawCoin('southxchange', $symbol);
-			}
-		}
+        $list = southxchange_api_query('prices');
+        if(is_array($list))
+        {
+            dborun("UPDATE markets SET deleted=true WHERE name='southxchange'");
+//            $debugStr = print_r($list);
+//            debuglog("update raw coins southx: $debugStr");
+            foreach($list as $info) {
+                $pair = explode("/", $info->Market);
+                if ($pair[1] != 'BTC')
+                    continue;
+                $symbol = strtoupper($pair[0]);
+                updateRawCoin('southxchange', $symbol);
+            }
+        }
 	}
 
 	//////////////////////////////////////////////////////////
