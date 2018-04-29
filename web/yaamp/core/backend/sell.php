@@ -61,7 +61,8 @@ function sellCoinToExchange($coin)
 //		debuglog("reserving $reserved $coin->symbol out of $coin->balance, available $amount");
 //	}
 
-	if($amount < $coin->reward/4)
+    //TODO: add check about coin settings for different markets
+	if($amount < $coin->reward/4  || $amount < 2)
 	{
 	//	debuglog("not enough $coin->symbol to sell $amount < $coin->reward /4");
 		return false;
@@ -75,6 +76,7 @@ function sellCoinToExchange($coin)
 	}
 
 	$amount = round($amount, 8);
+
 //	debuglog("sending $amount $coin->symbol to $marketname, $deposit_address");
 
 	$market->lastsent = time();
