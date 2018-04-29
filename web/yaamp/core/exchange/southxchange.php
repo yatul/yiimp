@@ -23,6 +23,7 @@ function southxchange_api_query_post($method, $req = array())
     $uri = "https://www.southxchange.com/api/$method";
 
     $reqStr=implode("|", $req);
+    sleep(1);
 
     debuglog("southxchange api post: $method with params: $reqStr");
     // optional secret key
