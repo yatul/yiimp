@@ -398,10 +398,6 @@ function updateRawCoin($marketname, $symbol, $name='unknown')
 {
 	if($symbol == 'BTC') return;
 
-	if($marketname == 'southxchange') {
-	    debuglog("Southxchange update raw coin $symbol");
-    }
-
 	$coin = getdbosql('db_coins', "symbol=:symbol", array(':symbol'=>$symbol));
 	if(!$coin && YAAMP_CREATE_NEW_COINS)
 	{
