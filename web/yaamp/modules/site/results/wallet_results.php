@@ -165,7 +165,7 @@ $payout_freq = (YAAMP_PAYMENTS_FREQ / 3600)." hours";
 
 echo "<tr class='ssrow' style='border-top: 1px solid #eee;'>";
 echo "<td><img width=16 src='$refcoin->image'></td>";
-echo "<td colspan=3><b>Balance</b><span style=\"font-size: .8em;font-color=dark-grey\">payments made after $min_payout and $min_sunday BTCreached on Sunday</span></td>";
+echo "<td colspan=3><b>Balance</b><span style=\"font-size: .8em;font-color=dark-grey\">&nbsp;&nbsp;payments made after $min_payout and $min_sunday BTCreached on Sunday</span></td>";
 echo "<td align=right style='font-size: .8em;'><b></b></td>";
 echo "<td align=right style='font-size: .9em;'><b>$balance $refcoin->symbol</b></td>";
 echo "</tr>";
