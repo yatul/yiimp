@@ -109,6 +109,10 @@ function doSouthxchangeTrading($quick=false)
 
     if (is_array($balances)) {
         // auto trade
+        $orders = NULL;
+        //check current orders
+        $orders = doSouthxchangeListOrders();
+
         foreach ($balances as $balance) {
             if ($balance->Available == 0 && $balance->Deposited == 0) continue;
             if ($balance->Currency == 'BTC') continue;
@@ -122,11 +126,6 @@ function doSouthxchangeTrading($quick=false)
             if (!$market) continue;
             $market->balance = $balance->Deposited;
 
-            $orders = NULL;
-            if ($balance->Deposited > 0) {
-                //check current orders
-                $orders = doSouthxchangeListOrders();
-            }
 
             if (is_array($orders))
                 foreach ($orders as $order) {
