@@ -157,11 +157,15 @@ echo '<tr><td colspan="6" style="text-align:right; font-size: .8em;"><b>'.$fees_
 // ////////////////////////////////////////////////////////////////////////////
 
 $balance = bitcoinvaluetoa($user->balance);
+$min_payout = floatval(YAAMP_PAYMENTS_MINI);
+$min_sunday = $min_payout/10;
+
+$payout_freq = (YAAMP_PAYMENTS_FREQ / 3600)." hours";
 //$balance_usd = number_format($user->balance*$mining->usdbtc*$refcoin->price, 3, '.', ' ');
 
 echo "<tr class='ssrow' style='border-top: 1px solid #eee;'>";
 echo "<td><img width=16 src='$refcoin->image'></td>";
-echo "<td colspan=3><b>Balance</b></td>";
+echo "<td colspan=3><b>Balance</b><span style=\"font-size: .8em;font-color=dark-grey\">payments made after $min_payout and $min_sunday BTCreached on Sunday</span></td>";
 echo "<td align=right style='font-size: .8em;'><b></b></td>";
 echo "<td align=right style='font-size: .9em;'><b>$balance $refcoin->symbol</b></td>";
 echo "</tr>";
