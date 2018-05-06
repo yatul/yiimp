@@ -278,7 +278,7 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 		char script_dests[2048] = { 0 };
 		char script_payee[128] = { 0 };
 		char payees[4]; // addresses count
-		int npayees = 1;
+		int npayees = (templ->has_segwit_txs) ? 2 : 1;
 		bool masternode_enabled = json_get_bool(json_result, "masternode_payments_enforced");
 		bool superblocks_enabled = json_get_bool(json_result, "superblocks_enabled");
 		json_value* superblock = json_get_array(json_result, "superblock");
@@ -296,7 +296,20 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 					npayees++;
 					available -= amount;
 					base58_decode(payee, script_payee);
-					job_pack_tx(coind, script_dests, amount, script_payee);
+					bool superblock_use_p2sh = (strcmp(coind->symbol, "MAC") == 0);
+					if(superblock_use_p2sh) {
+						char eamount[32];
+						char coinb2_part[512] = { 0 };
+						char coinb2_len[4] = { 0 };
+						sprintf(coinb2_part, "a9%02x%s87", (unsigned int)(strlen(script_payee) >> 1) & 0xFF, script_payee);
+						sprintf(coinb2_len, "%02x", (unsigned int)(strlen(coinb2_part) >> 1) & 0xFF);
+						encode_tx_value(eamount, amount);
+						strcat(templ->coinb2, eamount);
+						strcat(templ->coinb2, coinb2_len);
+						strcat(templ->coinb2, coinb2_part);
+					} else {
+						job_pack_tx(coind, script_dests, amount, script_payee);
+					}
 					//debuglog("%s superblock %s %u\n", coind->symbol, payee, amount);
 				}
 			}
@@ -313,6 +326,7 @@ void coinbase_create(YAAMP_COIND *coind, YAAMP_JOB_TEMPLATE *templ, json_value *
 		}
 		sprintf(payees, "%02x", npayees);
 		strcat(templ->coinb2, payees);
+		if (templ->has_segwit_txs) strcat(templ->coinb2, commitment);
 		strcat(templ->coinb2, script_dests);
 		job_pack_tx(coind, templ->coinb2, available, NULL);
 		strcat(templ->coinb2, "00000000"); // locktime
