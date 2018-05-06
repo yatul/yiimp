@@ -377,6 +377,45 @@ function updateGraviexMarkets($force = false)
 			}
 		}
 	}
+
+/*    if(empty(EXCH_SOUTHXCHANGE_KEY)) return;
+
+    $last_checked = cache()->get($exchange.'-deposit_address-check');
+    if ($last_checked) return;
+
+    $addresses = array();
+    sleep(1);
+
+    if (!empty($list))
+        foreach($list as $market) {
+            $coin = getdbo('db_coins', $market->coinid);
+            if(!$coin) continue;
+
+            $symbol = $coin->getOfficialSymbol();
+            $addr = arraySafeVal($addresses, $symbol);
+            if($force || (empty($market->deposit_address) && !$last_checked))
+            {
+                if(!$coin->installed) continue;
+                sleep(1);
+                $query = southxchange_api_query_post('generatenewaddress', array('currency'=>$symbol));
+
+                if(strpos($query, " ")) {
+                    $queryStr = print_r($query);
+                    debuglog("Error during call: $queryStr");
+                    continue;
+                }
+
+                $query = str_replace("\"", "", $query);
+                $addr = $query;
+                debuglog("Created new address: $addr");
+            }
+            if (!empty($addr) && $market->deposit_address != $addr) {
+                debuglog("$exchange: deposit address for {$symbol} updated");
+                $market->deposit_address = $addr;
+                $market->save();
+            }
+        }
+    cache()->set($exchange.'-deposit_address-check', time(), 12*3600);*/
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

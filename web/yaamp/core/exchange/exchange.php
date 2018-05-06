@@ -41,6 +41,7 @@ require_once("cryptowatch.php");
 require_once("stocksexchange.php");
 require_once("tradesatoshi.php");
 require_once("southxchange.php");
+require_once("graviex.php");
 
 /* Format an exchange coin Url */
 function getMarketUrl($coin, $marketName)

@@ -72,12 +72,13 @@ function southxchange_api_query_post($method, $req = array())
 function southxchange_update_market($market)
 {
 	$exchange = 'southxchange';
+    $pair=null;
 	if (is_string($market))
 	{
 		$symbol = $market;
 		$coin = getdbosql('db_coins', "symbol=:sym", array(':sym'=>$symbol));
 		if(!$coin) return false;
-        $pair = strtolower($symbol).'/BTC';
+        $pair = strtoupper($symbol).'/BTC';
 		$market = getdbosql('db_markets', "coinid={$coin->id} AND name='$exchange'");
 		if(!$market) return false;
 
@@ -86,7 +87,7 @@ function southxchange_update_market($market)
 		$coin = getdbo('db_coins', $market->coinid);
 		if(!$coin) return false;
 		$symbol = $coin->getOfficialSymbol();
-		$pair = strtolower($symbol).'/BTC';
+		$pair = strtoupper($symbol).'/BTC';
 		if (!empty($market->base_coin)) $pair = $symbol.'/'.$market->base_coin;
 	}
 

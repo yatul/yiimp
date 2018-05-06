@@ -15,6 +15,7 @@ require_once('kucoin_trading.php');
 require_once('livecoin_trading.php');
 require_once('nova_trading.php');
 require_once('southxchange_trading.php');
+require_once('graviex_trading.php');
 
 
 function cancelExchangeOrder($order=false)
@@ -51,6 +52,9 @@ function cancelExchangeOrder($order=false)
 				break;
             case 'southxchange':
                 doSouthxchangeCancelOrder($order->uuid);
+                break;
+            case 'graviex':
+                doGraviexCancelOrder($order->uuid);
                 break;
 
 		}
@@ -162,8 +166,13 @@ function runExchange($exchangeName=false)
                 doSouthxchangeTrading(true);
                 updateSouthxchangeMarkets();
                 break;
+            case 'graviex':
+                doGraviexTrading(true);
+                updateGraviexMarkets();
+                break;
 
-			default:
+
+            default:
 				debuglog(__FUNCTION__.' '.$exchangeName.' not implemented');
 		}
 	}
