@@ -360,6 +360,23 @@ function updateRawcoins()
         }
 	}
 
+    if (!exchange_get('graviex', 'disabled')) {
+        $list = graviex_api_query('markets.json');
+        if(is_array($list))
+        {
+            dborun("UPDATE markets SET deleted=true WHERE name='graviex'");
+            $debugStr = print_r($list, true);
+            debuglog("update raw coins graviex: $debugStr");
+            foreach($list as $info) {
+                $pair = explode("/", $info["name"]);
+                if ($pair[1] != 'BTC')
+                    continue;
+                $symbol = strtoupper($pair[0]);
+                updateRawCoin('graviex', $symbol);
+            }
+        }
+    }
+
 	//////////////////////////////////////////////////////////
 
 	$markets = dbocolumn("SELECT DISTINCT name FROM markets");
