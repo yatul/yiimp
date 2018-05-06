@@ -15,10 +15,6 @@ $app = Yii::createApplication('CYiimpConsoleApp', $config);
 
 try
 {
-    require_once ('yaamp/core/exchange/graviex.php');
-    require_once ('yaamp/core/trading/graviex_trading.php');
-
-    doGraviexTrading();
     $app->runController($argv[1]);
 }
 
