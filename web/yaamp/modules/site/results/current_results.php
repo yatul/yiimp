@@ -169,7 +169,7 @@ echo "</tr>";
 
 echo "</table>";
 
-echo '<p style="font-size: .8em;">&nbsp;* values in mBTC/MH/day, per GH for sha & blake algos</p>';
+echo '<p style="font-size: .8em;">&nbsp;* values in mBTC/MH/day, per GH for sha & blake algos, per KH for yescrypt</p>';
 
 echo "</div></div><br>";
 ?>
