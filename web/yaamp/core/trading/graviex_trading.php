@@ -143,7 +143,7 @@ function doGraviexTrading($quick=false)
                     if (stripos($order->side, 'sell') === false) continue;
 
                     $listingCurrency = $symbol;
-                    $ticker = graviex_api_query("tickers/$order->market.json");
+                    $ticker = graviex_api_query("tickers/$order->market.json")["ticker"];
 
                     $ask = bitcoinvaluetoa($ticker["sell"]);
                     $sellprice = bitcoinvaluetoa($order->price);
