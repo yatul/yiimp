@@ -20,9 +20,9 @@ function string_to_hashrate($s)
 
 function BackendCoinsUpdate()
 {
-	$debug = true;
+	$debug = false;
 
-	debuglog(__FUNCTION__);
+	//debuglog(__FUNCTION__);
 	$t1 = microtime(true);
 
 	$pool_rate = array();
@@ -32,7 +32,7 @@ function BackendCoinsUpdate()
 	$coins = getdbolist('db_coins', "installed");
 	foreach($coins as $coin)
 	{
-		debuglog("doing $coin->name");
+		//debuglog("doing $coin->name");
 
 		$remote = new WalletRPC($coin);
 
@@ -84,7 +84,7 @@ function BackendCoinsUpdate()
             //autodisabling/enabling coins based on pool_ttf duration. Merged mined coins always enabled.
             if ($pool_ttf > 2 * 60 * 60) {
                 $coin->auto_ready = false;
-            } else if ($pool_ttf < 2 * 60) {
+            } else if ($pool_ttf < 1 * 60 * 60) {
                 $coin->auto_ready = true;
             }
         }
