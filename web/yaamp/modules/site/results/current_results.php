@@ -64,7 +64,7 @@ usort($algos, 'cmp');
 $total_coins = 0;
 $total_miners = 0;
 
-$showestimates = false;
+$showestimates = true;
 
 echo "<tbody>";
 foreach($algos as $item)
