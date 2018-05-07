@@ -177,7 +177,7 @@ function graviex_update_market($market)
     }
 
     $t1 = microtime(true);
-    $ticker = graviex_api_query("tickers/$pair.json");
+    $ticker = graviex_api_query("tickers/$pair.json")["ticker"];
 
     if (!isset($ticker)) return false;
     $price2 = ($ticker["sell"] + $ticker["buy"])/2;

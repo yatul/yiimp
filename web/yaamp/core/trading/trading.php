@@ -166,6 +166,7 @@ function runExchange($exchangeName=false)
                 doSouthxchangeTrading(true);
                 updateSouthxchangeMarkets();
                 break;
+
             case 'graviex':
                 doGraviexTrading(true);
                 updateGraviexMarkets();
