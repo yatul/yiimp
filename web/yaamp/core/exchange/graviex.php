@@ -27,7 +27,7 @@ function graviex_api_query_get($method, $req = array())
     require_once('/etc/yiimp/keys.php');
 
     $reqStr=print_r( $req, true);
-    //sleep(1);
+    sleep(1);
 
     debuglog("graviex api post: $method with params: $reqStr");
     // optional secret key
