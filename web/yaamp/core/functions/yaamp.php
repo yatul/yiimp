@@ -70,6 +70,7 @@ function yaamp_get_algos()
 
 // Used for graphs and 24h profit
 // GH/s for fast algos like sha256
+// kH/s for slow algos like yescript
 function yaamp_algo_mBTC_factor($algo)
 {
 	switch($algo) {
@@ -84,6 +85,8 @@ function yaamp_algo_mBTC_factor($algo)
 	case 'lbry':
 	case 'vanilla':
 		return 1000;
+    case 'yescrypt':
+            return 0.001;
 	default:
 		return 1;
 	}
