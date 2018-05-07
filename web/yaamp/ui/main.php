@@ -143,7 +143,7 @@ function showPageFooter()
 	echo '<div class="footer">';
 	$year = date("Y", time());
 
-	echo "<p>&copy; $year <a href=\"http://github.com/yatul/yiimp\">".YAAMP_SITE_NAME.'</a> - '.
+	echo "<p>&copy; $year ".YAAMP_SITE_NAME.' - '.
 		'based on <a href="http://github.com/tpruvot/yiimp">yiimp</a></p>';
 
 	echo '</div><!-- footer -->';
