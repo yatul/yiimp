@@ -205,7 +205,7 @@ function doGraviexTrading($quick=false)
             if ($amount * $coin->price < $min_btc_trade) continue;
 
             $uri = strtolower($coin->symbol).'btc';
-
+            sleep(1);
             $ticker = graviex_api_query("tickers/$uri.json")["ticker"];
 
             $sellamount = $amount;//min(amount, bidOrderValue)
@@ -216,7 +216,7 @@ function doGraviexTrading($quick=false)
 
             $params = array('market' => strtolower($symbol).'btc', 'side' => 'sell', 'price' => $sellprice, 'volume' => $sellamount);
             $res = graviex_api_query_post('orders.json', $params);
-            if (!$res || !empty($res["error"])) {
+            if (!$res || (is_array($res) && !empty($res["error"]))) {
                 debuglog("$exchange SubmitTrade err: " . print_r($res, true));
                 break;
             } else {

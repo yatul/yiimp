@@ -156,7 +156,10 @@ function BackendUpdateServices()
 		if(count($a->result->orders) == 0)
 		{
 			if($balance < $amount) continue;
-			$port = getAlgoPort($algo);
+			$port = getAlgoPort($algo."-nh");
+			if (empty($port)) {
+                $port = getAlgoPort($algo);
+            }
 
 			$res = fetch_url("https://api.nicehash.com/api?method=orders.create&id=$apiid&key=$apikey&location=0&algo=$i&amount=$amount&price=$setprice&limit=0&pool_host=yaamp.com&pool_port=$port&pool_user=$deposit&pool_pass=xx");
 			debuglog($res);
