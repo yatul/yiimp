@@ -80,7 +80,7 @@ function BackendCoinsUpdate()
         $total_rate = yaamp_pool_rate($coin->algo);
         $pool_ttf = $total_rate? $coin->difficulty * 0x100000000 / $total_rate: 0;
 
-        if ($coin->enable && !$coin->auxpow && $total_rate > 5000000) { //and HashRate > 5Mh/s to not disable turnedoff algos
+        if ($coin->enable && !$coin->auxpow && !$coin->always_auto && $total_rate > 5000000) { //and HashRate > 5Mh/s to not disable turnedoff algos
             //autodisabling/enabling coins based on pool_ttf duration. Merged mined coins always enabled.
             if ($pool_ttf > 2 * 60 * 60) {
                 $coin->auto_ready = false;

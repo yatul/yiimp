@@ -135,6 +135,12 @@ echo CUFHtml::activeCheckBox($coin, 'auto_ready');
 echo '<p class="formHint2">Allowed to mine</p>';
 echo CUFHtml::closeCtrlHolder();
 
+echo CUFHtml::openActiveCtrlHolder($coin, 'always_auto');
+echo CUFHtml::activeLabelEx($coin, 'always_auto');
+echo CUFHtml::activeCheckBox($coin, 'always_auto');
+echo '<p class="formHint2">Don\'t auto change auto flag.</p>';
+echo CUFHtml::closeCtrlHolder();
+
 echo CUFHtml::openActiveCtrlHolder($coin, 'visible');
 echo CUFHtml::activeLabelEx($coin, 'visible');
 echo CUFHtml::activeCheckBox($coin, 'visible');
