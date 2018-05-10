@@ -216,7 +216,7 @@ function doGraviexTrading($quick=false)
 
             $params = array('market' => strtolower($symbol).'btc', 'side' => 'sell', 'price' => $sellprice, 'volume' => $sellamount);
             $res = graviex_api_query_post('orders.json', $params);
-            if (!$res || (is_array($res) && !empty($res["error"]))) {
+            if (!$res || (is_array($res) && !empty($res["error"])) || !empty($res->error)) {
                 debuglog("$exchange SubmitTrade err: " . print_r($res, true));
                 break;
             } else {
