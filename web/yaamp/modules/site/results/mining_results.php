@@ -80,6 +80,13 @@ foreach($list as $coin)
 	$price = bitcoinvaluetoa($coin->price);
 	$height = number_format($coin->block_height, 0, '.', ' ');
 //	$pool_ttf = $coin->pool_ttf? sectoa2($coin->pool_ttf): '';
+    $h = $coin->block_height-100;
+    $ss1 = dboscalar("SELECT count(*) FROM blocks WHERE coin_id={$coin->id} AND height>=$h AND category!='orphan'");
+    $ss2 = dboscalar("SELECT count(*) FROM blocks WHERE coin_id={$coin->id} AND height>=$h AND category='orphan'");
+
+    $percent_pool1 = $ss1? $ss1.'%': '';
+    $percent_pool2 = $ss2? $ss2.'%': '';
+
 	$pool_ttf = $total_rate? $coin->difficulty * 0x100000000 / $total_rate: 0;
 	$reward = round($coin->reward, 3);
 
@@ -165,7 +172,7 @@ foreach($list as $coin)
 	if(!empty($coin->errors))
 		echo "<td align=right style='font-size: .8em; color: red;' title='$coin->errors'>$height</td>";
 	else
-		echo "<td align=right style='font-size: .8em;'>$height</td>";
+		echo "<td align=right style='font-size: .8em;'>$height<span style='font-size: .6em' title='pool\'s blocks in last 100'>$percent_pool1</span></td>";
 
 	if(!empty($real_ttf))
 		echo '<td align="right" style="font-size: .8em;" title="'.$pool_ttf.' at full pool speed">'.$real_ttf.'</td>';
