@@ -172,7 +172,7 @@ foreach($list as $coin)
 	if(!empty($coin->errors))
 		echo "<td align=right style='font-size: .8em; color: red;' title='$coin->errors'>$height</td>";
 	else
-		echo "<td align=right style='font-size: .8em;'>$height<span style='font-size: .9em;color:blue' title='pool\'s blocks in last 100'>$percent_pool1</span></td>";
+		echo "<td align=right style='font-size: .8em;'>$height <span style='font-size: .9em;color:blue' title='pool\'s blocks in last 100'>$percent_pool1</span></td>";
 
 	if(!empty($real_ttf))
 		echo '<td align="right" style="font-size: .8em;" title="'.$pool_ttf.' at full pool speed">'.$real_ttf.'</td>';
