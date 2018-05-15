@@ -1856,10 +1856,11 @@ function updateSouthxchangeMarkets($force = false)
 
             $symbol = $coin->getOfficialSymbol();
             $addr = arraySafeVal($addresses, $symbol);
-            if($force || (empty($market->deposit_address) && !$last_checked))
+            if(empty($market->deposit_address) && !$last_checked)
             {
                 if(!$coin->installed) continue;
                 sleep(1);
+
                 $query = southxchange_api_query_post('generatenewaddress', array('currency'=>$symbol));
 
                 if(strpos($query, " ")) {
