@@ -35,6 +35,7 @@ public:
 
 	char pubkey[1024];
 	char script_pubkey[1024];
+	bool p2sh_address;
 
 	bool pos;
 	bool hassubmitblock;

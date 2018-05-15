@@ -157,7 +157,8 @@ function BackendCoinsUpdate()
 				}
 
 				else if(isset($template['masternode']) && arraySafeVal($template,'masternode_payments_enforced')) {
-					$coin->reward -= arraySafeVal($template['masternode'],'amount',0)/100000000;
+					if (arraySafeVal($template,'masternode_payments_started'))
+						$coin->reward -= arraySafeVal($template['masternode'],'amount',0)/100000000;
 					$coin->hasmasternodes = true;
 				}
 
