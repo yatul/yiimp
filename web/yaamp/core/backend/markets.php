@@ -84,8 +84,9 @@ function BackendPricesUpdate()
 			}
 		}
 		else {
-			$coin->price = 0;
-			$coin->price2 = 0;
+		    //TODO: check this
+//			$coin->price = 0;
+//			$coin->price2 = 0;
 		}
 
 		$coin->save();
