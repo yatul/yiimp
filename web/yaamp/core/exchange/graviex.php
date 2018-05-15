@@ -77,9 +77,9 @@ function graviex_api_query_get($method, $req = array())
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 
-    $balancesStr = print_r($execResult, true);
+  //  $balancesStr = print_r($execResult, true);
 
-    debuglog("graviex api call result: $balancesStr");
+//    debuglog("graviex api call result: $balancesStr");
     return $resData;
 }
 
@@ -145,9 +145,9 @@ function graviex_api_query_post($method, $req = array())
     $execResult = curl_exec($ch);
     $resData = json_decode($execResult);
 
-    $balancesStr = print_r($execResult, true);
-
-    debuglog("graviex api call result: $balancesStr");
+//    $balancesStr = print_r($execResult, true);
+//
+//    debuglog("graviex api call result: $balancesStr");
     return $resData;
 }
 
