@@ -53,8 +53,9 @@ function doGraviexUpdateBalance()
         debuglog("doGraviexUpdateBalance balances: $balancesStr");
 
         foreach ($balances as $balance) {
-            debuglog("doGraviexUpdateBalance forEach: $balance->currency");
+
             if ($balance->currency == 'btc') {
+                debuglog("doGraviexUpdateBalance : $balance->currency");
                 if (is_object($savebalance)) {
                     $savebalance->balance = $balance->balance;
                     $savebalance->onsell = $balance->locked;
@@ -69,6 +70,7 @@ function doGraviexUpdateBalance()
                     array(':symbol' => strtoupper($balance->currency))
                 );
                 if (empty($coins)) continue;
+                debuglog("doGraviexUpdateBalance : $balance->currency");
                 foreach ($coins as $coin) {
                     $market = getdbosql('db_markets', "coinid=:coinid AND name='$exchange'", array(':coinid' => $coin->id));
                     if (!$market) continue;
