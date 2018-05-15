@@ -84,9 +84,9 @@ function BackendPricesUpdate()
 			}
 		}
 		else {
-		    //TODO: check this
-//			$coin->price = 0;
-//			$coin->price2 = 0;
+		    //gracefully decrease price to be able to handle delisting normally.
+			$coin->price *= 0.9;
+			$coin->price2 *= 0.9;
 		}
 
 		$coin->save();
