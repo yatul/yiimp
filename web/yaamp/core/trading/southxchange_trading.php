@@ -103,7 +103,7 @@ function doSouthxchangeTrading($quick=false)
     $flushall = rand(0, 8) == 0;
     if($quick) $flushall = false;
 
-    $min_btc_trade = exchange_get($exchange, 'min_btc_trade', 0.00010000); // minimum allowed by the exchange
+    $min_btc_trade = exchange_get($exchange, 'min_btc_trade', 0.000010000); // minimum allowed by the exchange
     $sell_ask_pct = 0.9999;        // sell on ask price - 0.01%
     $cancel_ask_pct = 1.20;      // cancel order if our price is more than ask price + 20%
 
