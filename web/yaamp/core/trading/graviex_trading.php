@@ -76,7 +76,7 @@ function doGraviexUpdateBalance()
                     if (!$market) continue;
                     $market->balance = $balance->balance;
                     $market->ontrade = $balance->locked;
-                    if (empty($market->deposit_address)) {
+                    if ($coin->installed && empty($market->deposit_address)) {
                         $params["currency"] = strtolower($coin->symbol);
                         $address = graviex_api_query_get('deposit_address.json', $params);
                         debuglog("$exchange: {$coin->symbol} deposit address updated");
