@@ -107,6 +107,7 @@ function BackendUpdateServices()
 
 	$deposit = NICEHASH_DEPOSIT;
 	$amount = NICEHASH_DEPOSIT_AMOUNT;
+	$host = YAAMP_STRATUM_URL;
 
 	$res = fetch_url("https://api.nicehash.com/api?method=balance&id=$apiid&key=$apikey");
 	debuglog($res);
@@ -161,7 +162,7 @@ function BackendUpdateServices()
                 $port = getAlgoPort($algo);
             }
 
-			$res = fetch_url("https://api.nicehash.com/api?method=orders.create&id=$apiid&key=$apikey&location=0&algo=$i&amount=$amount&price=$setprice&limit=0&pool_host=yaamp.com&pool_port=$port&pool_user=$deposit&pool_pass=xx");
+			$res = fetch_url("https://api.nicehash.com/api?method=orders.create&id=$apiid&key=$apikey&location=0&algo=$i&amount=$amount&price=$setprice&limit=0&pool_host=$host&pool_port=$port&pool_user=$deposit&pool_pass=xx");
 			debuglog($res);
 
 			$nicehash->last_decrease = time();
