@@ -55,6 +55,12 @@ class WalletRPC {
 
 	function __call($method, $params)
 	{
+		if (stripos($method, "dump") !== false) {
+			$this->error = "$method not authorized!";
+			debuglog("$method rpc method is not authorized!");
+			return false;
+		}
+
 		if ($this->type == 'Ethereum') {
 			if (!isset($this->accounts)) {
 				$this->accounts = $this->rpc->eth_accounts();
@@ -62,11 +68,6 @@ class WalletRPC {
 			}
 			if (!is_array($this->accounts)) {
 				// if wallet is stopped
-				return false;
-			}
-			if (stripos($method, "key") !== false) {
-				$this->error = "$method not authorized!";
-				debuglog("$method not authorized (key)!");
 				return false;
 			}
 			// convert common methods used by yiimp

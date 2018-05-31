@@ -38,7 +38,7 @@ function sellCoinToExchange($coin)
 	$market = getBestMarket($coin);
 	if(!$market) return;
 
-	if(!$coin->sellonbid && $market->lastsent != null && $market->lastsent > $market->lasttraded)
+	if($market->lastsent != null && $market->lastsent > $market->lasttraded)
 	{
 //		debuglog("*** not sending $coin->name to $market->name. last tx is late ***");
 		return;
@@ -79,9 +79,6 @@ function sellCoinToExchange($coin)
 
 //	debuglog("sending $amount $coin->symbol to $marketname, $deposit_address");
 
-	$market->lastsent = time();
-	$market->save();
-
 //	sleep(1);
 
 	$tx = $remote->sendtoaddress($deposit_address, $amount);
@@ -108,6 +105,12 @@ function sellCoinToExchange($coin)
 			debuglog($remote->error);
 			return;
 		}
+	}
+	
+	if($tx)
+	{
+		$market->lastsent = time();
+		$market->save();
 	}
 
 	$exchange = new db_exchange;

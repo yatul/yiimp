@@ -45,8 +45,8 @@ bool client_subscribe(YAAMP_CLIENT *client, json_value *json_params)
 
 	if(json_params->u.array.length>0)
 	{
-		strncpy(client->version, json_params->u.array.values[0]->u.string.ptr, 1023);
-	//	if(!strcmp(client->version, "stratum-proxy/0.0.1")) return false;
+		if (json_params->u.array.values[0]->u.string.ptr)
+			strncpy(client->version, json_params->u.array.values[0]->u.string.ptr, 1023);
 
 		if(strstr(client->version, "NiceHash") || strstr(client->version, "proxy") || strstr(client->version, "/3."))
 			client->reconnectable = false;
